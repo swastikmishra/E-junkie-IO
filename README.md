@@ -1,4 +1,4 @@
-<h4>Easy to use Lightweight CMS</h4>
+# Easy to use Lightweight CMS
 <br/>
 
 ### Features
@@ -26,6 +26,7 @@
   - Better Blogging Features (Tags, Author, Pages matrix)
 
 <br/>
+
 ### Resources
 EJIO uses open source Libraries and thats why it is itself open source &#x1f609;
 
@@ -42,11 +43,10 @@ EJIO uses open source Libraries and thats why it is itself open source &#x1f609;
 * [Youtube](https://www.youtube.com/) - To keep myself on the top!
 
 <br/>
+
 ### Getting Started
-You are already on the roll, just start typing in
-<br/>
-<a class="button is-info" href="/admin">Admin</a>
 
 <br/>
+
 ### Support
 We don't need donations right now, we will jab upon your happyness after using E-junkie IO.
