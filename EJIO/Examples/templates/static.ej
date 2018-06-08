@@ -1,0 +1,14 @@
+@include header
+
+<br/><br/>
+
+<div class="columns is-centered">
+  <div class="column is-8">
+    <h1 class="title has-text-centered"><i class="ion-md-aperture"></i> E-junkie IO</h1>
+		<div class="box">
+			{Page.Content}
+    </div>
+  </div>
+</div>
+
+@include footer
