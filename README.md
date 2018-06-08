@@ -21,6 +21,7 @@
   - Translation layer for rediecting old urls to new urls(clean urls)
   - Numerical blogging system
   - DBMS support for SQL/noSQL both
+  - Themes
   - Disqus
   - SSO API
   - Better Blogging Features (Tags, Author, Pages matrix)
@@ -45,6 +46,13 @@ EJIO uses open source Libraries and thats why it is itself open source &#x1f609;
 <br/>
 
 ### Getting Started
+- Download source.tar.xz
+- Extract in any folder under your DocumentRoot
+- Enter into the directory and run `php cli.php`
+- Enter your username, password and website
+- Installer will have your new CMS ready within seconds with inbuilt 2 pages and 3 templates.
+
+> If you are running in in your local system, its better to have Host entry in your local server, e.g, instead of having http://localhost/, you can have a host entry in your vhosts with domain name same as your website (abc.com, xyz.def, github.io). Otherwise when uploading to your server you have to edit website.json, Users/`username`.json manually.
 
 <br/>
 
