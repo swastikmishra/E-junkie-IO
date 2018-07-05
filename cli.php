@@ -104,6 +104,7 @@
       	$userjson->pages->{"error.md"}->visible = true;
 
 		$userjson->folders = array();	  
+	    	mkdir("./Users", 0777, true);
 		file_put_contents("./Users/$username.json", json_encode($userjson));
 
 		//copy example pages to pages folder
