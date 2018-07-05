@@ -46,7 +46,7 @@ EJIO uses open source Libraries and thats why it is itself open source &#x1f609;
 <br/>
 
 ### Getting Started
-- Download source.tar.xz
+- Download the [source](https://github.com/ejunkie/E-junkie-IO/archive/master.zip) from github.
 - Extract in any folder under your DocumentRoot
 - Enter into the directory and run `php cli.php`
 - Enter your username, password and website
