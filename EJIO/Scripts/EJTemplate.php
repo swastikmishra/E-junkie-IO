@@ -320,6 +320,22 @@ class EJTemplate{
 		$str = str_replace("{Site.Url}", $this->page->site->url, $str);
 
 		$str = str_replace("{ROOT}", $this->page->url, $str);
+		$str = str_replace("{Static}", "/static/".$this->page->user, $str);
+		/*Date - Time Replacements as described in http://php.net/manual/en/function.date.php */
+		$str = str_replace("{time}", time(), $str);
+		$str = str_replace("{d}", date('d'), $str); $str = str_replace("{D}", date('D'), $str); $str = str_replace("{j}", date('j'), $str);
+		$str = str_replace("{l}", date('l'), $str); $str = str_replace("{l}", date('l'), $str); $str = str_replace("{N}", date('N'), $str);
+		$str = str_replace("{S}", date('S'), $str); $str = str_replace("{w}", date('w'), $str); $str = str_replace("{z}", date('z'), $str);
+		$str = str_replace("{w}", date('w'), $str); $str = str_replace("{z}", date('z'), $str); $str = str_replace("{W}", date('W'), $str);
+		$str = str_replace("{F}", date('F'), $str); $str = str_replace("{m}", date('m'), $str); $str = str_replace("{n}", date('n'), $str);
+		$str = str_replace("{t}", date('t'), $str); $str = str_replace("{L}", date('L'), $str); $str = str_replace("{o}", date('o'), $str);
+		$str = str_replace("{y}", date('y'), $str); $str = str_replace("{Y}", date('Y'), $str); $str = str_replace("{a}", date('a'), $str);
+		$str = str_replace("{A}", date('A'), $str); $str = str_replace("{B}", date('B'), $str); $str = str_replace("{g}", date('g'), $str);
+		$str = str_replace("{G}", date('G'), $str); $str = str_replace("{h}", date('h'), $str); $str = str_replace("{H}", date('H'), $str);
+		$str = str_replace("{i}", date('i'), $str); $str = str_replace("{s}", date('s'), $str); $str = str_replace("{u}", date('u'), $str);
+		$str = str_replace("{v}", date('v'), $str); $str = str_replace("{e}", date('e'), $str); $str = str_replace("{I}", date('I'), $str);
+		$str = str_replace("{O}", date('O'), $str); $str = str_replace("{P}", date('P'), $str); $str = str_replace("{T}", date('T'), $str);
+		$str = str_replace("{Z}", date('Z'), $str); $str = str_replace("{c}", date('c'), $str); $str = str_replace("{r}", date('r'), $str);
 
 		if($this->EJ){
 			$str = str_replace("{EJ.ViewCartUrl}", "https://www.e-junkie.com/ecom/gb.php?c=cart&ejc=2&cl=".$this->EJ->client->client_id, $str);			
