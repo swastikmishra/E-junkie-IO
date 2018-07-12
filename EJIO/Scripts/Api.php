@@ -128,7 +128,7 @@
 				$yaml->folder = null;
 				if(substr($temp_page, 0, 3) == "---"){
 					$tyaml = explode('---', $temp_page)[1];
-					$temp_page = explode('---', $temp_page)[2];
+					$temp_page = explode('---', $temp_page, 3)[2];
 					$tyaml = (object) Spyc::YAMLLoad($tyaml);
 					$yaml->title = $tyaml->title;
 					$yaml->description = $tyaml->description;
