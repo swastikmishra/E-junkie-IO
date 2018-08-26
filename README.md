@@ -14,6 +14,7 @@
 - Easy to use/modify API
 - Generates JSONLD for all your pages
 - Support Blogging/Child pages
+- Supports subdomains
 
 <br/>
 
