@@ -22,10 +22,9 @@ require_once './EJIO/Scripts/Api.php';
 
 $WebsitesAvailable = json_decode(file_get_contents("websites.json"));
 $tmpWebsiteName = $_SERVER['HTTP_HOST'];
-$tmpWebsiteName = explode(".", $tmpWebsiteName);
-if(count($tmpWebsiteName) == 2){
-        $tmpWebsiteName = $tmpWebsiteName[0].".".$tmpWebsiteName[1];
-}else{
+if(strpos($tmpWebsiteName, "www.") !== FALSE){
+        //remove www from the website name, as we treat it as an alias
+        $tmpWebsiteName = explode(".", $tmpWebsiteName);
         $tmpWebsiteName = $tmpWebsiteName[1].".".$tmpWebsiteName[2];
 }
 $WebsiteRequested = $tmpWebsiteName;

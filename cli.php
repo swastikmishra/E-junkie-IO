@@ -34,15 +34,10 @@
 		$orgUrl = $url;
 		$url = str_replace("https://", "", $url);
 		$url = str_replace("http://", "", $url);
-		$url = explode(".",$url);
-		if(count($url) == 1){
-			$url = $url[0];
-		}else{
-			if(count($url) == 2) //xyz.com, abc.xyz
-				$url = $url[0].".".$url[1];
-			else //www.xyz.com, blog.abc.xom
-				$url = $url[1].".".$url[2];
-		}
+		if(strpos($url, "www.") !== FALSE){
+                        $url = explode(".",$url);
+                        $url = $url[1].".".$url[2];
+                }
 		if(substr($url,"-1") == "/") $url = substr($url, 0, strlen($url)-1);
 
 		//create entry in websites index
