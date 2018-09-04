@@ -1,3 +1,5 @@
+<img src="http://www.e-junkie.io/static/e-junkieio/E-junkieIO2.png" style="max-width: 250px">
+
 # Easy to use Lightweight CMS
 <br/>
 
@@ -56,6 +58,3 @@ EJIO uses open source Libraries and thats why it is itself open source &#x1f609;
 > If you are running in in your local system, its better to have Host entry in your local server, e.g, instead of having http://localhost/, you can have a host entry in your vhosts with domain name same as your website (abc.com, xyz.def, github.io). Otherwise when uploading to your server you have to edit website.json, Users/`username`.json manually.
 
 <br/>
-
-### Support
-We don't need donations right now, we will jab upon your happyness after using E-junkie IO.
