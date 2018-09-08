@@ -1,4 +1,7 @@
 <?php
+
+	(PHP_SAPI !== 'cli' || isset($_SERVER['HTTP_USER_AGENT'])) && die('cli only');
+
 	error_reporting(E_ALL);
 	ini_set('display_errors', 1);
 
