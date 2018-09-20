@@ -74,6 +74,7 @@
 	    $userjson->website->logo = "";
 	    $userjson->website->keywords = "";
 	    $userjson->website->home = "home";
+	    $userjson->website->theme = "default";
 
 	    $userjson->integrations = new stdClass();
 	    $userjson->integrations->ejunkie = new stdClass();
@@ -109,10 +110,12 @@
 		file_put_contents("./UsersPages/$username/home.md", file_get_contents("./EJIO/Examples/pages/home.md"));
 		file_put_contents("./UsersPages/$username/error.md", file_get_contents("./EJIO/Examples/pages/error.md"));
 
-		//copy example templates to templates foler
-		file_put_contents("./UsersTemplates/$username/footer.ej", file_get_contents("./EJIO/Examples/templates/footer.ej"));
-		file_put_contents("./UsersTemplates/$username/header.ej", file_get_contents("./EJIO/Examples/templates/header.ej"));
-		file_put_contents("./UsersTemplates/$username/static.ej", file_get_contents("./EJIO/Examples/templates/static.ej"));
+		//copy example templates to theme/templates foler
+		file_put_contents("./UsersTemplates/$username/default/footer.ej", file_get_contents("./EJIO/Examples/templates/footer.ej"));
+		file_put_contents("./UsersTemplates/$username/default/header.ej", file_get_contents("./EJIO/Examples/templates/header.ej"));
+		file_put_contents("./UsersTemplates/$username/default/static.ej", file_get_contents("./EJIO/Examples/templates/static.ej"));
+		file_put_contents("./UsersTemplates/$username/default/shop.ej", file_get_contents("./EJIO/Examples/templates/shop.ej"));
+		file_put_contents("./UsersTemplates/$username/default/product.ej", file_get_contents("./EJIO/Examples/templates/product.ej"));
 	}
 
 	echo "\nYour website has been created. Below is the link to your admin panel. We have created basic pages and templates to get started.";

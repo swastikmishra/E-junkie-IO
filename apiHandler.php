@@ -1,4 +1,5 @@
 <?php
+	$Env = "dev"; // (prod / dev) -> dev means no user login or session checking
 
 	if($_SERVER['REQUEST_METHOD'] == "OPTIONS"){ die(); }
 	$endpoint = $match['params']['endpoint'];
@@ -10,7 +11,12 @@
 		$_POST = json_decode(file_get_contents('php://input'), true);
 	}
 	require_once './EJIO/Scripts/Api.php';
-	$user = $_SESSION['EJIO_user'];
+	
+	if($Env == "dev")
+		$user = "cms"; //write you own username here
+	else 
+		$user = $_SESSION['EJIO_user'];
+
 	if($params == "save") $updateCall = true;
 	else $updateCall = false;
 	$api = new Api($user, $updateCall);
@@ -48,6 +54,13 @@
 			if($params == "save") sendResponse($api->saveTemplate($_POST['key'], $_POST['template']));
 			$api->invalidRequest("Endpoint not found", 404); 
 			break;
+		case "themes": sendResponse($api->getThemes()); break;
+		// case "template": 
+		// 	if($params == null) sendResponse($api->getTemplate($_POST['key'])); 
+		// 	if($params == "delete")	sendResponse($api->deleteTemplate($_POST['key'])); 
+		// 	if($params == "save") sendResponse($api->saveTemplate($_POST['key'], $_POST['template']));
+		// 	$api->invalidRequest("Endpoint not found", 404); 
+		// 	break;
 		case "assets": 
 			if($params == null) sendResponse($api->getAssets()); 
 			if($params == "delete")	sendResponse($api->deleteAsset($_POST['key'])); 

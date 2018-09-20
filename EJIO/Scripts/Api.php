@@ -70,7 +70,7 @@
 			$recently_addedTs->modify('-10 day');
 			$recently_addedPages = [];
 			$recently_editedPages = [];
-			foreach($this->UserJSON->pages as $page){
+			foreach($this->UserJSON->pages as $k=>$page){
 				$updatedAt = strtotime($page->updated_at);
 				if($last_edit < $updatedAt){
 					$last_edit = $updatedAt;
@@ -78,11 +78,11 @@
 				}
 				if(strtotime($page->created_at) > $recently_addedTs->getTimeStamp() && count($recently_addedPages) <3){
 					$page->created_at = $this->getDaysTimestamp(strtotime($page->created_at));
-					$recently_addedPages[] = $page;
+					$recently_addedPages[$k] = $page;
 				}
 				if(strtotime($page->updated_at) > $recently_addedTs->getTimeStamp() && count($recently_editedPages) <3){
 					$page->updated_at = $this->getDaysTimestamp(strtotime($page->updated_at));
-					$recently_editedPages[] = $page;
+					$recently_editedPages[$k] = $page;
 				}
 			}
 			if($arr['totalPages'] != 0){
@@ -139,6 +139,7 @@
 				} 
 				if($yaml->template == "") $yaml->template = "static";
 				$page['yaml'] = $yaml;
+				$page['key'] = $key;
 				$page['content'] = trim($temp_page);
 				if(!$lite){
 					require_once 'EJTemplate.php';
@@ -157,7 +158,7 @@
 						$Page->EJ->selectedCategory = null;
 						$Page->EJ->selectedProduct = null;
 					}
-				$Page->name = str_replace('.md', '', $key);
+					$Page->name = str_replace('.md', '', $key);
 					if($Page->url != "/"){
 						$Page->url = "/".$Page->url;
 						$Page->url = substr($Page->url, 0, -1);
@@ -187,6 +188,7 @@
 			$yaml = (object) $page->yaml;
 			$isFolder = false;
 			$key = explode("/", $key);
+			$key = str_replace(" ", "-", $key);
 			if(count($key) == 0)
 				$key = $key[0];
 			else
@@ -331,6 +333,25 @@
 			return $newArr;
 		}
 
+		public function getThemes(){
+			$themes = glob('./UsersTemplates/'.$this->User."/*", GLOB_ONLYDIR);
+			$newArr = array();
+			foreach($themes as $theme){
+				$prop = json_decode(file_get_contents($theme."/init.json"));
+				if($prop);
+				else{
+					$prop = new stdClass();
+					$prop->name = strtoupper(str_replace("./UsersTemplates/".$this->User."/", "", $theme));
+					$prop->author = null;
+					$prop->thumbnail = null;
+					$prop->demo = null;
+					$prop->homepage = null;
+				}
+				$newArr[] = $prop;
+			}
+			return ["themes"=>$newArr, "selectedTheme"=>$this->UserJSON->website->theme];
+		}
+
 		public function getTemplate($key){
 			$template = file_get_contents('./UsersTemplates/'.$this->User."/".$key.".ej");
 			return array('key'=>$key, 'template'=>$template);
@@ -400,7 +421,12 @@
 			Available Integrations:
 				1. E-junkie
 			*/
-
+			//get EJ Products if client id is present
+			if($this->UserJSON->integrations->ejunkie->clientId){
+				require_once 'EJParser.php';
+				$EJ = new EJParser($this->UserJSON->integrations->ejunkie->clientId, null, null, null, $this->UserJSON->integrations->ejunkie->apiKey, true);
+				$this->UserJSON->integrations->ejunkie->products = $EJ->products;
+			}
 			return $this->UserJSON->integrations;
 		}
 
@@ -414,13 +440,14 @@
 						$this->UserJSON->integrations->ejunkie->enabled = ($val->enabled === true ? true : false);
 					else
 						$this->UserJSON->integrations->ejunkie->enabled = false;
+					$this->UserJSON->integrations->ejunkie->apiKey = $val->apiKey;
 					$this->UserJSON->integrations->ejunkie->shop = ($val->shop == "" ? "shop" : $val->shop);
 					$this->UserJSON->integrations->ejunkie->product = ($val->product == "" ? "product" : $val->product);
 					$this->UserJSON->integrations->ejunkie->pref = $val->pref;
 				}
 			}
 			$this->saveJSON();
-			return $this->UserJSON->integrations;
+			return $this->getIntegrations();
 		}
 
 		public function getSettings($key = ""){

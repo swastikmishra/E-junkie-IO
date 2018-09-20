@@ -13,7 +13,7 @@ if($match['name'] == "api" || $match['name'] == "api2"){
 if($match['name'] == "admin"){
 	session_start();
 	createCSRFToken();
-	
+
 	if($match['params']['param'] == "logout")
 		unset($_SESSION['EJIO_user']);
 
@@ -66,7 +66,7 @@ if(($Page->name == "shop" || $Page->name == "product") && $Page->EJ != null){
 	else
 		$Page->pageNo = intval($match['params']['page']);
 	if($Page->pageNo == 0) $Page->pageNo++;
-	$EJ = new EJParser($Page->EJ->clientId, $Page->EJ->selectedCategory, $Page->EJ->selectedProduct, $Page);
+	$EJ = new EJParser($Page->EJ->clientId, $Page->EJ->selectedCategory, $Page->EJ->selectedProduct, $Page, $Page->EJ->apiKey);
 }
 
 $EJT = new EJTemplate($Page, $Api, $EJ);
@@ -78,8 +78,8 @@ if(($Page->name == "shop" || $Page->name == "product") && $EJ != null){
 		$EJ->getTagProducts();
 	else if($Page->type == 'product'){
 		$EJ->getProduct();
-		if(count($EJ->products) == 0) show404();
 	}
+	if(count($EJ->products) == 0) show404();
 	$EJT->generateShop();
 }else{
 	$EJT->generateStatic();

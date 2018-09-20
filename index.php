@@ -1,4 +1,6 @@
 <?php
+error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
+
 header("Access-Control-Allow-Origin: http://localhost:8080");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS");
@@ -41,9 +43,9 @@ if($Website){
 	$Page = new stdClass();
 	$Page->url = "/"; //base url or sub-folder name
 	$Page->user = $Website->username;
-	$Page->location->templates = "./UsersTemplates/".$Page->user;
+	$Page->theme = strtolower($Website->website->theme != "" ? $Website->website->theme : "default");
+	$Page->location->templates = "./UsersTemplates/".$Page->user."/".$Page->theme;
 	$Page->location->pages = "./UsersPages/".$Page->user;
-	$Page->location->static = "./UsersTemplates/".$Page->user;
 
 	$Page->site = $Website->website;
 	$Page->site->url = ($Page->ssl ? "https://" : "http://").$Page->site->domain;

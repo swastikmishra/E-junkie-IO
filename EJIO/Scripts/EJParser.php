@@ -2,6 +2,7 @@
 
 class EJParser{
 	var $json_url = "https://s3.amazonaws.com/json.e-junkie.com/";
+	var $api_url = "https://api.e-junkie.com/api/";
 	var $clientId = null;
 	var $products = array();
 	var $availableTags = array();
@@ -17,10 +18,16 @@ class EJParser{
 	var $currentPage = 1;
 	var $size = 15;
 	var $maxRelated = 0;
+	var $apiKey = null;
 
-	function __construct($client, $tag, $item, $page){
+	function __construct($client, $tag, $item, $page, $apiKey = null, $lite = false){
 		$this->clientId = intval($client);
-		$this->json_url = $this->json_url.$this->clientId;
+		$this->apiKey = $apiKey;
+		if($this->apiKey){
+			$this->api_url = $this->api_url.$this->clientId;
+		}else{
+			$this->json_url = $this->json_url.$this->clientId;
+		}
 		if($tag != null)
 			$this->appliedTag = urldecode($tag);
 		if($item != null)
@@ -31,23 +38,73 @@ class EJParser{
 		if($page->pageNo)
 			$this->currentPage = $page->pageNo-1;
 		$this->maxRelated = $page->EJ->maxRelated;
-		$this->fetchJSON();
+		if($this->apiKey)
+			$this->fetchAPI($lite);
+		else
+			$this->fetchJSON($lite);
 	}	
 
-	function fetchJSON(){
+	function fetchAPI($lite = false){
 		if($this->clientId == 0)
 			return false;
+		$postdata = http_build_query(array('key' => $this->apiKey ));
+		$opts = array('http' =>
+		    array(
+		        'method'  => 'POST',
+		        'header'  => 'Content-type: application/x-www-form-urlencoded',
+		        'content' => $postdata
+		    )
+		);
+		$context  = stream_context_create($opts);
+		if($lite){
+			$data = file_get_contents($this->api_url."/?lite", false, $context);
+			$this->products = json_decode($data)->products;
+			$this->validCall = true;
+			return true;
+		}else if($this->selectedProduct){
+			$data = file_get_contents($this->api_url."/".$this->selectedProduct, false, $context);
+		}else{
+			$data = file_get_contents($this->api_url."/?page=".($this->currentPage+1), false, $context);
+		}
+		if($data != ""){
+			$data = json_decode($data);
+			$this->client = $data->client;
+			$this->totalCount = $data->totalCount;
+			$this->totalPages = $data->totalPages;
+			$this->size = $data->size;
+			$temp_products = $data->products;
+			$this->products = array();
+			foreach($temp_products as $product){
+				if($this->pref){
+					if($this->pref->hide_out_of_stock && $product->out_of_stock) continue;
+				}
+				$product->name = htmlspecialchars($product->name, ENT_QUOTES, "UTF-8");
+				$product->tagline = htmlspecialchars($product->tagline, ENT_QUOTES, "UTF-8");
+				$this->products[] = $product;
+			}
+			$this->validCall = true;
+			return true;
+		}
+		else return false;
+	}
 
-		// $ch = curl_init();
-		// $timeout = 5;
-		// curl_setopt($ch, CURLOPT_URL, $this->json_url);
-		// curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		// curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
-		// $data = curl_exec($ch);
-		// curl_close($ch);
+	function fetchJSON($lite){
+		if($this->clientId == 0)
+			return false;
 		$data = file_get_contents($this->json_url);
 		if($data != ""){
 			$data = json_decode($data);
+			if($lite){
+				foreach($data->items as $product){
+					$this->products[] = array(
+						"id"=> $product->id,
+						"name"=> $product->name,
+						"number"=> $product->number
+					);
+				}	
+				$this->validCall = true;
+				return true;
+			}
 			$this->client = $data->client;
 			$this->totalCount = $data->count;
 			$temp_products = $data->items;
@@ -165,6 +222,16 @@ class EJParser{
 
 	function getProducts(){
 		if($this->validCall){
+			if($this->pref){
+	            if($this->pref->hidden && count($this->pref->hidden) > 0){
+                    $tmp_arr = array();
+                    foreach($this->products as $product){
+                        if(!in_array($product->number, $this->pref->hidden))
+                            $tmp_arr[] = $product;
+                    }
+                    $this->products = $tmp_arr;
+	            }
+		    }
 			$this->getAvailableTags();
 			$temp_array = array();
 			$temp_products = $this->products;
@@ -198,7 +265,7 @@ class EJParser{
 			$this->totalCount = count($this->products);
 			$this->totalPages = ceil($this->totalCount/$this->size);
 			$this->products = array_slice($this->products, ($this->currentPage*$this->size), $this->size);
-
+		
 			foreach($this->products as $product){
 				$product->slug = $this->getSlug($product->name);
 				$product->url = $this->getURL($product);

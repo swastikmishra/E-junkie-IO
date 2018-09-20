@@ -274,7 +274,7 @@ class EJTemplate{
 		$template = $this->cleanTemplate($template, 'IfProduct');
 		$template = $this->cleanTemplate($template, 'IfShop');
 		if($this->page->editing == true){
-			$content = "<div id='EJIO_editor_live_mark'>".$content."</div>";
+			$content = "<div id='editor_live_mark'>".$content."</div>";
 		}
 		if(strpos($template, "{ChildPages}") !== FALSE){
 			$template = $this->generateChildPages($template, $isParentFolder);
