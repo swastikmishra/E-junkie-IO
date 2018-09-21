@@ -247,9 +247,8 @@ class EJTemplate{
 		}
 		if($isParentFolder == null){
 			if(substr($content, 0, 3) == "---"){
-				$content = explode('---', $content, 3);
-				$yaml = $content[1];
-				$content = $content[2];
+				$yaml = explode('---', $content)[1];
+				$content = str_replace($yaml."---", "", $content);
 				$yaml = (object) Spyc::YAMLLoad($yaml);
 			} 
 			$Parsedown = new Parsedown();
@@ -415,11 +414,11 @@ class EJTemplate{
 			$tstr = str_replace('{RelatedProduct.Id}', $this->EJ->relatedProducts[$x]->id, $tstr);
 			$tstr = str_replace('{RelatedProduct.Number}', $this->EJ->relatedProducts[$x]->number, $tstr);
 			$tstr = str_replace('{RelatedProduct.Tagline}', $this->EJ->relatedProducts[$x]->tagline, $tstr);
-			if($this->EJ->relatedProducts[$x]->image)
-				$tstr = str_replace('{RelatedProduct.Image}', $this->EJ->relatedProducts[$x]->image, $tstr);
+			if($this->EJ->relatedProducts[$x]->thumbnail)
+				$tstr = str_replace('{RelatedProduct.Thumbnail}', $this->EJ->relatedProducts[$x]->thumbnail, $tstr);
 			else
-				$tstr = str_replace('{RelatedProduct.Image}', "https://www.e-junkie.com/ecom/spacer.gif", $tstr);
-		$tstr = str_replace('{RelatedProduct.Price}', $this->EJ->relatedProducts[$x]->price, $tstr);
+				$tstr = str_replace('{RelatedProduct.Thumbnail}', "https://www.e-junkie.com/ecom/spacer.gif", $tstr);
+			$tstr = str_replace('{RelatedProduct.Price}', $this->EJ->relatedProducts[$x]->price, $tstr);
 			$tstr = str_replace('{RelatedProduct.Currency}', $this->EJ->relatedProducts[$x]->currency, $tstr);
 			$tstr = str_replace('{RelatedProduct.Description}', $this->EJ->relatedProducts[$x]->description, $tstr);
 			$tstr = str_replace('{RelatedProduct.Details}', $this->EJ->relatedProducts[$x]->details, $tstr);
@@ -539,6 +538,20 @@ class EJTemplate{
 		return str_replace("{Product.Form}$form_template{/Product.Form}", $form_str, $str);
 	}
 
+	function generateEJProductImages($str, $product){
+        for($x = 0; $x < 5; $x++){
+            while(strpos($str, "{Product.Image".($x+1)."}") !== FALSE){
+                $tstr = $this->getTemplateString($str, "Product.Image".($x+1));
+                if($product->images[$x])
+                        $fstr = str_replace("{Image}", $product->images[$x], $tstr);
+                else
+                        $fstr = "";
+                $str = str_replace("{Product.Image".($x+1)."}".$tstr."{/Product.Image".($x+1)."}", $fstr, $str);
+            }
+        }
+        return $str;
+    }
+
 	function generateShop(){
 
 		if(count($this->EJ->products) > 1){
@@ -595,10 +608,11 @@ class EJTemplate{
 				$tstr = str_replace('{Product.Id}', $product->id, $tstr);
 				$tstr = str_replace('{Product.Number}', $product->number, $tstr);
 				$tstr = str_replace('{Product.Tagline}', $product->tagline, $tstr);
-				if($product->image)
-					$tstr = str_replace('{Product.Image}', $product->image, $tstr);
+				if($product->thumbnail)
+					$tstr = str_replace('{Product.Thumbnail}', $product->thumbnail, $tstr);
 				else
-					$tstr = str_replace('{Product.Image}', "https://www.e-junkie.com/ecom/spacer.gif", $tstr);
+					$tstr = str_replace('{Product.Thumbnail}', "https://www.e-junkie.com/ecom/spacer.gif", $tstr);
+				$tstr = $this->generateEJProductImages($tstr, $product);
 				$tstr = str_replace('{Product.Price}', $product->price, $tstr);
 				$tstr = str_replace('{Product.Currency}', $product->currency, $tstr);
 				$tstr = str_replace('{Product.Description}', $product->description, $tstr);
@@ -649,10 +663,11 @@ class EJTemplate{
 			$template = str_replace('{Product.Id}', $product->id, $template);
 			$template = str_replace('{Product.Number}', $product->number, $template);
 			$template = str_replace('{Product.Tagline}', $product->tagline, $template);
-			if($product->image)
-				$template = str_replace('{Product.Image}', $product->image, $template);
+			if($product->thumbnail)
+				$template = str_replace('{Product.Thumbnail}', $product->thumbnail, $template);
 			else
-				$template = str_replace('{Product.Image}', "https://www.e-junkie.com/ecom/spacer.gif", $template);
+				$template = str_replace('{Product.Thumbnail}', "https://www.e-junkie.com/ecom/spacer.gif", $template);
+			$template = $this->generateProductImages($template, $product);
 			$template = str_replace('{Product.Price}', $product->price, $template);
 			$template = str_replace('{Product.Currency}', $product->currency, $template);
 			$template = str_replace('{Product.Description}', $product->description, $template);

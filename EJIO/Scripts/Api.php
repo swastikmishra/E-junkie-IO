@@ -325,46 +325,27 @@
 		}
 
 		public function getTemplates(){
-			$templates = scandir('./UsersTemplates/'.$this->User."/");
+			$templates = scandir('./UsersTemplates/'.$this->User."/".$this->UserJSON->website->theme."/");
 			$newArr = array();
 			foreach($templates as $template)
-				if($template != "." && $template != "..")
+				if($template != "." && $template != ".." && $template != "init.json")
 					$newArr[] = str_replace(".ej", "", $template);
 			return $newArr;
 		}
 
-		public function getThemes(){
-			$themes = glob('./UsersTemplates/'.$this->User."/*", GLOB_ONLYDIR);
-			$newArr = array();
-			foreach($themes as $theme){
-				$prop = json_decode(file_get_contents($theme."/init.json"));
-				if($prop);
-				else{
-					$prop = new stdClass();
-					$prop->name = strtoupper(str_replace("./UsersTemplates/".$this->User."/", "", $theme));
-					$prop->author = null;
-					$prop->thumbnail = null;
-					$prop->demo = null;
-					$prop->homepage = null;
-				}
-				$newArr[] = $prop;
-			}
-			return ["themes"=>$newArr, "selectedTheme"=>$this->UserJSON->website->theme];
-		}
-
 		public function getTemplate($key){
-			$template = file_get_contents('./UsersTemplates/'.$this->User."/".$key.".ej");
+			$template = file_get_contents('./UsersTemplates/'.$this->User."/".$this->UserJSON->website->theme."/".$key.".ej");
 			return array('key'=>$key, 'template'=>$template);
 		}
 
 		public function saveTemplate($key, $template){
-			file_put_contents("./UsersTemplates/".$this->User."/".$key.".ej", $template);
+			file_put_contents('./UsersTemplates/'.$this->User."/".$this->UserJSON->website->theme."/".$key.".ej", $template);
 			return array("Template" => array("key"=>$key, "template"=>$template), "Templates" => $this->getTemplates());
 		}
 
 		public function deleteTemplate($key){
 			if($key == "" || $key == "." || $key == "..") return $this->getTemplates();
-			unlink("./UsersTemplates/".$this->User."/".$key.".ej");
+			unlink('./UsersTemplates/'.$this->User."/".$this->UserJSON->website->theme."/".$key.".ej");
 			return $this->getTemplates();
 		}
 
@@ -380,6 +361,49 @@
 					);
 				}
 			return $newArr;
+		}
+
+		public function getThemes(){
+			$themes = glob('./UsersTemplates/'.$this->User."/*", GLOB_ONLYDIR);
+			$newArr = array();
+			foreach($themes as $theme){
+				$prop = json_decode(file_get_contents($theme."/init.json"));
+				if($prop);
+				else{
+					$prop = new stdClass();
+					$prop->name = end(explode("/",$theme));
+					$prop->author = null;
+					$prop->thumbnail = null;
+					$prop->demo = null;
+					$prop->homepage = null;
+				}
+				$prop->key = end(explode("/",$theme));
+				$newArr[] = $prop;
+			}
+			return ["themes"=>$newArr, "selectedTheme"=>$this->UserJSON->website->theme];
+		}
+
+		public function saveTheme($key){
+			if($key != ""){
+				$key = str_replace(".", "", $key);
+				$key = str_replace("/", "", $key);
+				$key = str_replace("..", "", $key);
+				$key = str_replace("\\", "", $key);
+				$this->UserJSON->website->theme = str_replace(" ", "", $key);
+			}
+			$this->saveJSON();
+			return $this->getThemes();
+		}
+
+		public function deleteTheme($key){
+			if($key == "" || $key == "." || $key == ".." && ($key == $this->UserJSON->website->theme)) return $this->getThemes();
+			$templates = scandir('./UsersTemplates/'.$this->User."/".$key."/");
+			foreach($templates as $template){
+				if($template != "." && $template != "..")
+					unlink('./UsersTemplates/'.$this->User."/".$key."/".$template);
+			}
+			rmdir("./UsersTemplates/".$this->User."/".$key);
+			return $this->getThemes();
 		}
 
 		public function saveAssets($request){

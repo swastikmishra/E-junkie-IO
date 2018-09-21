@@ -1,5 +1,7 @@
 # ignore all logs
+static
 websites.json
 UsersTemplates/
 UsersPages/
 Users/
+admin

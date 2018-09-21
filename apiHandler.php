@@ -55,12 +55,11 @@
 			$api->invalidRequest("Endpoint not found", 404); 
 			break;
 		case "themes": sendResponse($api->getThemes()); break;
-		// case "template": 
-		// 	if($params == null) sendResponse($api->getTemplate($_POST['key'])); 
-		// 	if($params == "delete")	sendResponse($api->deleteTemplate($_POST['key'])); 
-		// 	if($params == "save") sendResponse($api->saveTemplate($_POST['key'], $_POST['template']));
-		// 	$api->invalidRequest("Endpoint not found", 404); 
-		// 	break;
+		case "theme": 
+			if($params == "delete")	sendResponse($api->deleteTheme($_POST['key'])); 
+			if($params == "save") sendResponse($api->saveTheme($_POST['key']));
+			$api->invalidRequest("Endpoint not found", 404); 
+			break;
 		case "assets": 
 			if($params == null) sendResponse($api->getAssets()); 
 			if($params == "delete")	sendResponse($api->deleteAsset($_POST['key'])); 
