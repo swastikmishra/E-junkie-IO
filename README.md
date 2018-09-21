@@ -15,7 +15,6 @@
 - Integrate with E-junkie to have your e-commerce started in 5 Mins, all the 5 mins of labour on E-junkie, nothing here &#x1f609;
 - Easy to use/modify API
 - Generates JSONLD for all your pages
-- Support Blogging/Child pages
 - Supports subdomains
 
 <br/>
@@ -27,6 +26,7 @@
   - Themes
   - Disqus
   - SSO API
+  - Support Blogging/Child pages
   - Better Blogging Features (Tags, Author, Pages matrix)
 
 <br/>
