@@ -1,13 +1,13 @@
 <?php
-error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
-
-header("Access-Control-Allow-Origin: http://localhost:8080");
-header("Access-Control-Max-Age: 3600");
-header("Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS");
-header("Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token");
-header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
-header("Access-Control-Allow-Credentials: true");
-header("Access-Control-Expose-Headers: Access-Control-Allow-Origin");	
+// Uncomment the below lines only for dev
+// error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
+// header("Access-Control-Allow-Origin: http://localhost:8080");
+// header("Access-Control-Max-Age: 3600");
+// header("Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS");
+// header("Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token");
+// header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+// header("Access-Control-Allow-Credentials: true");
+// header("Access-Control-Expose-Headers: Access-Control-Allow-Origin");	
 
 function show404(){
 	global $EJT;

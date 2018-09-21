@@ -1,6 +1,4 @@
 <?php
-	$Env = "dev"; // (prod / dev) -> dev means no user login or session checking
-
 	if($_SERVER['REQUEST_METHOD'] == "OPTIONS"){ die(); }
 	$endpoint = $match['params']['endpoint'];
 	$params = (isset($match['params']['param']) ? $match['params']['param'] : null);
@@ -12,10 +10,7 @@
 	}
 	require_once './EJIO/Scripts/Api.php';
 	
-	if($Env == "dev")
-		$user = "cms"; //write you own username here
-	else 
-		$user = $_SESSION['EJIO_user'];
+	$user = $_SESSION['EJIO_user'];
 
 	if($params == "save") $updateCall = true;
 	else $updateCall = false;

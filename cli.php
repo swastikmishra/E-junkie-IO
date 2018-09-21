@@ -38,9 +38,9 @@
 		$url = str_replace("https://", "", $url);
 		$url = str_replace("http://", "", $url);
 		if(strpos($url, "www.") !== FALSE){
-                        $url = explode(".",$url);
-                        $url = $url[1].".".$url[2];
-                }
+            $url = explode(".",$url);
+            $url = $url[1].".".$url[2];
+        }
 		if(substr($url,"-1") == "/") $url = substr($url, 0, strlen($url)-1);
 
 		//create entry in websites index
@@ -85,6 +85,7 @@
 		$userjson->integrations->ejunkie->maxRelated = 5;
 		$userjson->integrations->ejunkie->pref = json_decode('{"pinned": [],"pinned_down": [],"hide_out_of_stock": false}');
 
+    	mkdir("./Users", 0777, true);
 	    mkdir("./UsersPages/$username", 0777, true);
 	    mkdir("./UsersTemplates/$username", 0777, true);
 	    mkdir("./static/$username", 0777, true);
@@ -103,7 +104,6 @@
       	$userjson->pages->{"error.md"}->visible = true;
 
 		$userjson->folders = array();	  
-	    	mkdir("./Users", 0777, true);
 		file_put_contents("./Users/$username.json", json_encode($userjson));
 
 		//copy example pages to pages folder

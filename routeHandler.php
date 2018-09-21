@@ -27,8 +27,8 @@ if($match['name'] == "admin"){
 	die();
 }
 
-/*incase we get /home in request, its better to forwar it to / with 301 to avoid duplicate content*/
-if($match['params']['page'] == "home"){
+/*incase we get /home in request, its better to forward it to / with 301 to avoid duplicate content*/
+if($match['params']['page'] == $Page->site->home){
 	header('Location: http://'.$_SERVER['HTTP_HOST'], true, 301);
 }
 
