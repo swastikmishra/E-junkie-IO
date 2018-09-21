@@ -98,7 +98,7 @@
         <div class="container has-text-centered">
 
           <h1 class="title">
-            <i class="icon ion-md-aperture"></i> E-junkie IO
+            <img style="width: 100px;" src="https://www.e-junkie.com/ej/images/E-junkieIO2.png"> E-junkie IO
           </h1>
 
           <?php if($AuthenticationErrors) { ?>

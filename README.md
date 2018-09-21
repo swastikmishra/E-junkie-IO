@@ -1,4 +1,4 @@
-<img src="http://www.e-junkie.io/static/e-junkieio/E-junkieIO1.png" style="max-width: 250px">
+<img src="https://www.e-junkie.com/ej/images/E-junkieIO1.png" style="max-width: 250px">
 
 # Easy to use Lightweight CMS
 <br/>
