@@ -1,6 +1,6 @@
 # ignore all logs
 websites.json
-static/
+#static/
 UsersTemplates/
 UsersPages/
 Users/
