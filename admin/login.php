@@ -45,7 +45,7 @@
     .actionBtns:hover{
       box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
     }
-    .actionBtns.register{
+7    .actionBtns.register{
       background: #ff5722;
     }
     .actionBtns i{
@@ -98,7 +98,7 @@
         <div class="container has-text-centered">
 
           <h1 class="title">
-            <img style="width: 100px;" src="https://www.e-junkie.com/ej/images/E-junkieIO2.png"> E-junkie IO
+            <img style="width: 200px;" src="https://www.e-junkie.com/ej/images/E-junkieIO2.png"> 
           </h1>
 
           <?php if($AuthenticationErrors) { ?>
