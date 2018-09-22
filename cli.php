@@ -87,7 +87,7 @@
 
     	mkdir("./Users", 0777, true);
 	    mkdir("./UsersPages/$username", 0777, true);
-	    mkdir("./UsersTemplates/$username", 0777, true);
+	    mkdir("./UsersTemplates/$username/default", 0777, true);
 	    mkdir("./static/$username", 0777, true);
 
 		$userjson->pages = new stdClass();
