@@ -247,8 +247,9 @@ class EJTemplate{
 		}
 		if($isParentFolder == null){
 			if(substr($content, 0, 3) == "---"){
-				$yaml = explode('---', $content)[1];
-				$content = str_replace($yaml."---", "", $content);
+				$content = explode('---', $content, 3);
+				$yaml = $content[1];
+				$content = $content[2];
 				$yaml = (object) Spyc::YAMLLoad($yaml);
 			} 
 			$Parsedown = new Parsedown();

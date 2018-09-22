@@ -1,6 +1,6 @@
 <?php
+error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
 // Uncomment the below lines only for dev
-// error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
 // header("Access-Control-Allow-Origin: http://localhost:8080");
 // header("Access-Control-Max-Age: 3600");
 // header("Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS");
