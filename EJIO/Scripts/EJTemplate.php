@@ -668,7 +668,7 @@ class EJTemplate{
 				$template = str_replace('{Product.Thumbnail}', $product->thumbnail, $template);
 			else
 				$template = str_replace('{Product.Thumbnail}', "https://www.e-junkie.com/ecom/spacer.gif", $template);
-			$template = $this->generateProductImages($template, $product);
+			$template = $this->generateEJProductImages($template, $product);
 			$template = str_replace('{Product.Price}', $product->price, $template);
 			$template = str_replace('{Product.Currency}', $product->currency, $template);
 			$template = str_replace('{Product.Description}', $product->description, $template);
