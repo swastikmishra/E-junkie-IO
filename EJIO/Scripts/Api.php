@@ -147,7 +147,7 @@
 					$Page = new stdClass();
 					$Page->url = "/"; //base url or sub-folder name
 					$Page->user = $this->UserJSON->username;
-					$Page->location->templates = "./UsersTemplates/".$Page->user;
+					$Page->location->templates = "./UsersTemplates/".$Page->user."/".$this->UserJSON->website->theme;
 					$Page->location->pages = "./UsersPages/".$Page->user;
 					$Page->location->static = "./UsersTemplates/".$Page->user;
 					$Page->site = $this->UserJSON->website;
@@ -464,6 +464,7 @@
 						$this->UserJSON->integrations->ejunkie->enabled = ($val->enabled === true ? true : false);
 					else
 						$this->UserJSON->integrations->ejunkie->enabled = false;
+					$this->UserJSON->integrations->ejunkie->maxRelated = $val->maxRelated;
 					$this->UserJSON->integrations->ejunkie->apiKey = $val->apiKey;
 					$this->UserJSON->integrations->ejunkie->shop = ($val->shop == "" ? "shop" : $val->shop);
 					$this->UserJSON->integrations->ejunkie->product = ($val->product == "" ? "product" : $val->product);
