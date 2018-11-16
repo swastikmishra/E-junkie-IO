@@ -52,7 +52,3 @@ EJIO uses open source Libraries and thats why it is itself open source &#x1f609;
 You are already on the roll, just start typing in
 <br/>
 <a class="button is-info" href="/admin">Admin</a>
-
-<br/>
-### Support
-We don't need donations right now, we will jab upon your happyness after using E-junkie IO.
