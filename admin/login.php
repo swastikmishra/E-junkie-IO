@@ -45,7 +45,7 @@
     .actionBtns:hover{
       box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
     }
-7    .actionBtns.register{
+    .actionBtns.register{
       background: #ff5722;
     }
     .actionBtns i{
@@ -118,18 +118,6 @@
             <button class="button is-info is-inverted">Login</button>
           </form>
           <br/>
-          <!-- <button onclick="activateForm(2)" class="actionBtns register"><i class="icon ion-md-person-add"></i> Register</button>
-          <form class="form" id="register_form" method="post" action="<?php echo $_SERVER['REQUEST_URI']; ?>">
-            <input type="hidden" name="register">
-            <input type="hidden" name="csrf" value="<?php echo $_SESSION['csrf']; ?>">
-            <p><input class="input" type="text" placeholder="Username"></p>
-            <p><input class="input" type="passsword" placeholder="Password"></p>
-            <p><input class="input" type="email" placeholder="Email"></p>
-            <p><input class="input" type="text" placeholder="Website Url http://"></p>
-            <p><input class="input" type="text" placeholder="Site Title"></p>
-            <button class="button is-info is-inverted">Register</button>
-          </form> -->
-
         </div>
       </div>
 
