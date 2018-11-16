@@ -50,6 +50,13 @@ if($Website){
 	$Page->site = $Website->website;
 	$Page->site->url = ($Page->ssl ? "https://" : "http://").$Page->site->domain;
 
+	if($_SERVER['HTTP_X_FORWARDED_PROTO'] == "http" && $Page->site->ssl == true){
+                $redirect = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+                header('HTTP/1.1 301 Moved Permanently');
+                header('Location: ' . $redirect);
+                exit();
+        }
+
 	$Page->EJ = null;
 	if($Website->integrations->ejunkie->enabled === true){
 		$Page->EJ = $Website->integrations->ejunkie;
